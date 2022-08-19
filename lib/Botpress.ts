@@ -56,12 +56,19 @@ export const parseSingleBotpressMessage = (app: IApp, message: any): IBotpressMe
     let { sessionId, text, choices, image } = message;
 
     if(image){
-        app.getLogger().error(`image! ${JSON.stringify(image)}`);
         text = image
     }
 
-    if(message.type === 'card'){
+    if(message.type === 'audio'){
+        text = message.audio
+    }
 
+    if(message.type === 'video'){
+        text = message.video
+    }
+
+
+    if(message.type === 'card'){
         card = {
             type: 'cardType',
             title: message.title,
@@ -69,7 +76,6 @@ export const parseSingleBotpressMessage = (app: IApp, message: any): IBotpressMe
             image: message.image,
             actions: message.actions
         }
-
         text = JSON.stringify(card)
     }
 
